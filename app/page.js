@@ -15,10 +15,16 @@ export default function Menu() {
       </h1>
       <div className="flex flex-col gap-5">
         <button
-          onClick={() => router.push("/game")}
+          onClick={() => router.push("/blackjack")}
           className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
         >
-          Jogar
+          Jogar Blackjack
+        </button>
+        <button
+          onClick={() => router.push("/adivinha")}
+          className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
+        >
+          Jogar Advinhação
         </button>
         <button
           onClick={() => router.push("/como-jogar")}
