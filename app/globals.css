@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Poker';
+  src: url('/fonts/Poker.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -15,7 +22,45 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Geist Sans", sans-serif;
+}
+
+button {
+  background-color: #FFD700; 
+  color: #333333; 
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #b8860b; 
+  color: #FFFFFF; 
+}
+
+h1, h2, h3 {
+  font-family: "Playfair Display", serif;
+}
+
+.text-gold {
+  color: #FFD700; /* Dourado */
+}
+
+.bg-gold {
+  background-color: #FFD700;
+}
+
+.text-dark {
+  color: #1A1A1A; /* Verde escuro */
+}
+
+.bg-dark {
+  background-color: #1A1A1A;
+}
+
+button:hover {
+  transition: 0.3s ease;
 }
