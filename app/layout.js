@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
         style={{
           backgroundImage: "url('https://www.acquagreen.com.br/wp-content/uploads/2016/08/Fundo-verde-Home.jpg')",
           backgroundSize: "cover",
@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
           </h1>
         </header>
         <main
-          className="container mx-auto px-4 py-6"
+          className="container mx-auto px-4 py-6 min-h-screen"
           style={{
             color: "#F5F5F5", // Branco suave
             fontFamily: "Geist Sans, sans-serif",
