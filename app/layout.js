@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
               fontFamily: "Poker, sans-serif", // Usando a fonte personalizada Poker
             }}
           >
-            BlackJack
+            Jogos de Baralho
           </h1>
         </header>
         <main

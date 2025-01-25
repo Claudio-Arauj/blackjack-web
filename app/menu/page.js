@@ -11,20 +11,32 @@ export default function Menu() {
       style={{ backgroundImage: "url('/background.jpg')" }}
     >
       <h1 className="text-5xl font-bold mb-10" style={{ textShadow: '3px 3px 6px #000000' }}>
-        Escolha Uma Opção
+        Escolha Um Jogo
       </h1>
       <div className="flex flex-col gap-5">
         <button
-          onClick={() => router.push("/menu")}
+          onClick={() => router.push("/blackjack_menu")}
           className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
         >
-          Jogos
+          Jogar Blackjack
         </button>
         <button
-          onClick={() => router.push("/sobre")}
+          onClick={() => router.push("/war_menu")}
           className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
         >
-          Sobre o Projeto
+          Jogar War
+        </button>
+        <button
+          onClick={() => router.push("/adivinha_menu")}
+          className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
+        >
+          Jogar Advinhação
+        </button>
+        <button
+            onClick={() => router.push("/..")}
+            className="px-6 py-3 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
+        >
+            Voltar ao Início
         </button>
       </div>
     </div>

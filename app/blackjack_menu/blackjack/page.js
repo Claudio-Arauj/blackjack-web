@@ -128,7 +128,7 @@ export default function Home() {
   };
 
   const handleBackToMenu = () => {
-    router.push("/"); // Navega de volta para a página inicial
+    router.push("/blackjack_menu"); // Navega de volta para a página inicial
   };
 
   useEffect(() => {

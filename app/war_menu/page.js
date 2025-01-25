@@ -15,16 +15,28 @@ export default function Menu() {
       </h1>
       <div className="flex flex-col gap-5">
         <button
-          onClick={() => router.push("/menu")}
+          onClick={() => router.push("/war_menu/war")}
           className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
         >
-          Jogos
+          Jogar War
         </button>
         <button
-          onClick={() => router.push("/sobre")}
+          onClick={() => router.push("/war_menu/como-jogar")}
           className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
         >
-          Sobre o Projeto
+          Como Jogar
+        </button>
+        <button
+          onClick={() => router.push("/war_menu/sobre")}
+          className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
+        >
+          Sobre
+        </button>
+        <button
+            onClick={() => router.push("/menu")}
+            className="px-6 py-3 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
+        >
+            Voltar ao Menu
         </button>
       </div>
     </div>
