@@ -8,7 +8,6 @@ export default function Home() {
   const [deckId, setDeckId] = useState(null);
   const [playerCard, setPlayerCard] = useState(null);
   const [playerScore, setPlayerScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
   const [roundResult, setRoundResult] = useState("");
   const [cardBackImage, setCardBackImage] = useState("https://deckofcardsapi.com/static/img/back.png"); // Verso da carta
   const [guessType, setGuessType] = useState("");
@@ -23,7 +22,6 @@ export default function Home() {
       setDeckId(response.data.deck_id);
       setPlayerCard(null);
       setPlayerScore(0);
-      setGameOver(false);
       setRoundResult("");
       setCardBackImage("https://deckofcardsapi.com/static/img/back.png");
       setGuessType("");
@@ -67,7 +65,6 @@ export default function Home() {
     setCardBackImage(playerCard.image); // Revela a carta
     setHasGuessed(true);
     setIsFormVisible(false);
-    setGameOver(true);
   };
 
   useEffect(() => {
@@ -87,25 +84,26 @@ export default function Home() {
 
         <div className="my-5">
           <p className="text-xl">{roundResult}</p>
-
-          {!gameOver ? (
+          {!isFormVisible && !hasGuessed && (
             <button
               onClick={drawCard}
               className="mt-3 px-4 py-2 bg-gold text-dark rounded hover:bg-dark hover:text-gold transition"
             >
-              Começar
+              {playerCard ? "Continuar" : "Começar"}
             </button>
-          ) : (
-            <div className="flex justify-center gap-4">
+          )}
+
+          {hasGuessed && (
+            <div className="flex justify-center gap-4 mt-3">
               <button
-                onClick={initializeGame}
-                className="mt-3 px-4 py-2 bg-gold text-dark rounded hover:bg-dark hover:text-gold transition"
+                onClick={drawCard}
+                className="px-4 py-2 bg-gold text-dark rounded hover:bg-dark hover:text-gold transition"
               >
-                Tentar Novamente
+                Continuar
               </button>
               <button
                 onClick={() => router.push("/adivinha_menu")}
-                className="mt-3 px-4 py-2 bg-gray-500 text-white rounded hover:bg-dark hover:text-gold transition"
+                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-dark hover:text-gold transition"
               >
                 Voltar ao Menu
               </button>
@@ -113,7 +111,7 @@ export default function Home() {
           )}
         </div>
 
-        {isFormVisible && !gameOver && (
+        {isFormVisible && !hasGuessed && (
           <div className="my-5 bg-gray-800 p-5 rounded shadow-lg">
             <form onSubmit={handleFormSubmit} className="text-gray-900">
               <div className="mb-3">
@@ -138,7 +136,7 @@ export default function Home() {
               >
                 Adivinhar
               </button>
-            </form>
+            </form> 
           </div>
         )}
       </div>
