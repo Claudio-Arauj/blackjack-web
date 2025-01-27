@@ -252,6 +252,7 @@ export default function Home() {
               <button
                 onClick={() => {
                   saveScore();
+                  handleGo(router,"","blackjack");
                 }}
                 className="px-4 py-2 bg-gold text-dark rounded hover:bg-dark hover:text-gold"
               >
