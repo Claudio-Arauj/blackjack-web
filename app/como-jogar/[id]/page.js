@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { tutorialPageData, handleGo } from "@/app/componentes/components";
+import { handleGo, pageData } from "@/app/componentes/components";
 import React from "react";
 
 export default function ComoJogar({ params }) {
@@ -12,7 +12,7 @@ export default function ComoJogar({ params }) {
   const router = useRouter();
 
   // Obtendo os dados correspondentes ao id da URL
-  const tutorial = tutorialPageData.tutorial[id];
+  const tutorial = pageData.tutorial[id];
 
   return (
     <div className="h-screen flex flex-col items-center justify-start text-white bg-cover bg-center mt-16" style={{ backgroundImage: "url('/background.jpg')" }}>

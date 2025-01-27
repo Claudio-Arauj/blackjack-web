@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { sobrePageData } from "@/app/componentes/components";
+import { pageData } from "@/app/componentes/components";
 import React from "react";
 
 export default function Sobre({ params }) {
@@ -11,7 +11,7 @@ export default function Sobre({ params }) {
   const router = useRouter();
 
   // Obtendo os dados correspondentes ao id da URL
-  const sobre = sobrePageData.sobre[id];
+  const sobre = pageData.sobre[id];
 
   return (
     <div
