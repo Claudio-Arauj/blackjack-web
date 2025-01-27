@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { handleGo } from "@/app/componentes/components";
 
 export default function Home() {
   const [deckId, setDeckId] = useState(null);
@@ -104,7 +105,7 @@ export default function Home() {
                 Tentar Novamente
               </button>
               <button
-                onClick={() => router.push("/adivinha_menu")}
+                onClick={() => handleGo(router,"","adivinha")}
                 className="mt-3 px-4 py-2 bg-gray-500 text-white rounded hover:bg-dark hover:text-gold transition"
               >
                 Voltar ao Menu

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { handleGo } from "./componentes/components";
 
 export default function Menu() {
   const router = useRouter();
@@ -15,13 +16,13 @@ export default function Menu() {
       </h1>
       <div className="flex flex-col gap-5">
         <button
-          onClick={() => router.push("/menu")}
+          onClick={() => handleGo(router,"","menu")}
           className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
         >
-          Jogos
+          Menu de Jogos
         </button>
         <button
-          onClick={() => router.push("/sobre")}
+          onClick={() => handleGo(router,"/sobre", "projeto")}
           className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
         >
           Sobre o Projeto

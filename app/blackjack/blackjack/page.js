@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation"; // Importa o useRouter para navegação
+import { handleGo } from "@/app/componentes/components";
 
 export default function Home() {
   const [deckId, setDeckId] = useState(null);
@@ -127,10 +128,6 @@ export default function Home() {
     handleDealerTurn(); // Chama a vez do dealer depois que o jogador parar
   };
 
-  const handleBackToMenu = () => {
-    router.push("/blackjack_menu"); // Navega de volta para a página inicial
-  };
-
   useEffect(() => {
     initializeGame();
   }, []);
@@ -152,7 +149,7 @@ export default function Home() {
             </button>
             
             <button
-              onClick={handleBackToMenu}
+              onClick={() => handleGo(router,"","blackjack")}
               className="mt-3 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition"
             >
               Voltar para o Menu

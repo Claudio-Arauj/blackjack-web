@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";  // Importando useRouter
+import { handleGo } from "@/app/componentes/components";
 
 export default function Home() {
   const [deckId, setDeckId] = useState(null);
@@ -90,7 +91,7 @@ export default function Home() {
               Jogar Novamente
             </button>
             <button
-              onClick={() => router.push('/war_menu')}  // Redireciona para a página inicial
+              onClick={() => handleGo(router,"","war")}
               className="mt-3 px-4 py-2 bg-gray-500 text-white rounded hover:bg-dark hover:text-gold transition"
             >
               Voltar ao Menu
