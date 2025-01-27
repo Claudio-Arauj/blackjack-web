@@ -103,13 +103,8 @@ export default function Home() {
                 Continuar
               </button>
               <button
-<<<<<<< HEAD:app/adivinha_menu/adivinha/page.js
-                onClick={() => router.push("/adivinha_menu")}
-                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-dark hover:text-gold transition"
-=======
                 onClick={() => handleGo(router,"","adivinha")}
                 className="mt-3 px-4 py-2 bg-gray-500 text-white rounded hover:bg-dark hover:text-gold transition"
->>>>>>> Danilo:app/adivinha/adivinha/page.js
               >
                 Voltar ao Menu
               </button>
