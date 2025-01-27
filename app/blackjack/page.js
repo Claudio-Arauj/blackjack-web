@@ -22,6 +22,12 @@ export default function Menu() {
           Jogar Blackjack
         </button>
         <button
+          onClick={() => handleGo(router,"","ranking")}
+          className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
+        >
+          Ranking
+        </button>
+        <button
           onClick={() => handleGo(router,"como-jogar","blackjack")}
           className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
         >

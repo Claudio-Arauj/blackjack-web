@@ -4,6 +4,7 @@ export const pageData = {
     start: `..`,
     menu: `menu`,
     projeto: `projeto`,
+    ranking: `ranking`,
     blackjack: `blackjack`,
     adivinha: `adivinha`,
     war: `war`,

@@ -13,12 +13,15 @@ export default function Home() {
   const [dealerScore, setDealerScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState("");
-  const [playerWins, setPlayerWins] = useState(0); // Contagem de vitórias do jogador
-  const [dealerWins, setDealerWins] = useState(0); // Contagem de vitórias do dealer
-  const [playerStopped, setPlayerStopped] = useState(false); // Flag para indicar se o jogador parou
-  const [playerOver21, setPlayerOver21] = useState(false); // Flag para indicar se o jogador ultrapassou 21
-  const [dealerOver21, setDealerOver21] = useState(false); // Flag para indicar se o dealer ultrapassou 21
-  const router = useRouter(); // Inicializa o useRouter para navegação
+  const [playerWins, setPlayerWins] = useState(0); 
+  const [dealerWins, setDealerWins] = useState(0); 
+  const [playerStopped, setPlayerStopped] = useState(false); 
+  const [playerOver21, setPlayerOver21] = useState(false); 
+  const [dealerOver21, setDealerOver21] = useState(false); 
+  const [showSaveModal, setShowSaveModal] = useState(false); 
+  const [playerName, setPlayerName] = useState(""); // Nome do jogador
+  const [existingPlayerIndex, setExistingPlayerIndex] = useState(null); // Índice do jogador existente
+  const router = useRouter(); 
 
   const initializeGame = async () => {
     try {
@@ -80,10 +83,9 @@ export default function Home() {
     setPlayerScore(newScore);
 
     if (newScore > 21 && !playerOver21) {
-      // Jogador ultrapassa 21, mas não perde imediatamente
       setPlayerOver21(true);
-      setPlayerStopped(true); // Jogador não pode mais jogar
-      handleDealerTurn(); // Passa imediatamente para o dealer
+      setPlayerStopped(true); 
+      handleDealerTurn(); 
     }
   };
 
@@ -91,7 +93,6 @@ export default function Home() {
     let updatedDealerCards = [...dealerCards];
     let newScore = dealerScore;
 
-    // O dealer vai puxar cartas enquanto a pontuação for abaixo de 17
     while (newScore < 17) {
       const newCards = await drawCards(1);
       updatedDealerCards = [...updatedDealerCards, ...newCards];
@@ -99,15 +100,13 @@ export default function Home() {
       setDealerCards(updatedDealerCards);
       setDealerScore(newScore);
 
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Atraso para animar a jogada
+      await new Promise((resolve) => setTimeout(resolve, 1000)); 
     }
 
-    // Verifica se o dealer ultrapassou 21
     if (newScore > 21) {
       setDealerOver21(true);
     }
 
-    // Agora verificar se o jogo acabou e decidir o vencedor
     if (playerOver21 && dealerOver21) {
       setWinner("Empate! Ambos ultrapassaram 21.");
     } else if (newScore > 21 || playerScore > newScore) {
@@ -125,8 +124,47 @@ export default function Home() {
 
   const handlePlayerStop = () => {
     setPlayerStopped(true);
-    handleDealerTurn(); // Chama a vez do dealer depois que o jogador parar
+    handleDealerTurn(); 
   };
+
+  const handleBackToMenu = () => {
+    setShowSaveModal(true); // Exibe a modal para inserir o nome do jogador
+  };
+
+  const saveScore = () => {
+    if (playerName) {
+      const rankings = JSON.parse(localStorage.getItem("rankings")) || [];
+  
+      const existingPlayerIndex = rankings.findIndex(player => player.name === playerName);
+  
+      if (existingPlayerIndex !== -1) {
+        // Se o jogador já existe, mostramos a modal de confirmação para sobrescrever
+        setExistingPlayerIndex(existingPlayerIndex);
+        setShowSaveModal(true); // Mostrar a modal de sobrescrever
+      } else {
+        rankings.push({ name: playerName, score: playerWins });
+        rankings.sort((a, b) => b.score - a.score);
+        localStorage.setItem("rankings", JSON.stringify(rankings));
+        router.push("/blackjack_menu");
+      }
+    } else {
+      alert("Por favor, insira um nome para salvar a pontuação.");
+    }
+  };
+
+  const handleOverwriteScore = (overwrite) => {
+    const rankings = JSON.parse(localStorage.getItem("rankings")) || [];
+    
+    if (overwrite) {
+      rankings[existingPlayerIndex].score = playerWins;
+    }
+
+    rankings.sort((a, b) => b.score - a.score);
+    localStorage.setItem("rankings", JSON.stringify(rankings));
+    handleGo(router,"","blackjack")
+    setShowSaveModal(false);
+  };
+
 
   useEffect(() => {
     initializeGame();
@@ -149,7 +187,7 @@ export default function Home() {
             </button>
             
             <button
-              onClick={() => handleGo(router,"","blackjack")}
+              onClick={handleBackToMenu}
               className="mt-3 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition"
             >
               Voltar para o Menu
@@ -193,6 +231,65 @@ export default function Home() {
               ))}
             </div>
             <p className="text-lg">Pontuação: {dealerScore}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de salvar ou sobrescrever pontuação */}
+      {showSaveModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-10">
+          <div className="bg-black p-5 rounded-lg text-center">
+            <h3 className="text-xl font-semibold mb-4">Salvar Pontuação</h3>
+            <p className="mb-4">Digite seu nome para salvar a pontuação:</p>
+            <input
+              type="text"
+              placeholder="Seu nome"
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              className="p-2 border rounded mb-4 text-black bg-white"
+            />
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => {
+                  saveScore();
+                }}
+                className="px-4 py-2 bg-gold text-dark rounded hover:bg-dark hover:text-gold"
+              >
+                Salvar
+              </button>
+              <button
+                onClick={() => {
+                  setShowSaveModal(false);
+                  handleGo(router,"","blackjack");
+                }}
+                className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600"
+              >
+                Cancelar
+              </button>
+            </div>
+            {/* Pergunta se quer sobrescrever a pontuação existente */}
+            {existingPlayerIndex !== null && (
+              <div className="mt-4">
+                <p className="text-red-500">Nome já existe. Deseja sobrescrever?</p>
+                <div className="flex justify-center gap-4">
+                  <button
+                    onClick={() => handleOverwriteScore(true)}
+                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
+                  >
+                    Sobrescrever
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleOverwriteScore(false),
+                      handleGo(router,"","blackjack");
+                    }}
+                    className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
