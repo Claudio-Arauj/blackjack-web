@@ -12,32 +12,32 @@ export default function Menu() {
       style={{ backgroundImage: "url('/background.jpg')" }}
     >
       <h1 className="text-5xl font-bold mb-10" style={{ textShadow: '3px 3px 6px #000000' }}>
-        Escolha Um Jogo
+        Escolha Uma Opção
       </h1>
       <div className="flex flex-col gap-5">
         <button
-          onClick={() => handleGo(router,"","blackjack")}
-          className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
-        >
-          Jogar Blackjack
-        </button>
-        <button
-          onClick={() => handleGo(router,"","war")}
+          onClick={() => handleGo(router,"war","war")}
           className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
         >
           Jogar War
         </button>
         <button
-          onClick={() => handleGo(router,"","adivinha")}
+          onClick={() => handleGo(router,"como-jogar","war")}
           className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
         >
-          Jogar Advinhação
+          Como Jogar
         </button>
         <button
-            onClick={() => handleGo(router,"","start")}
+          onClick={() => handleGo(router,"sobre","war")}
+          className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
+        >
+          Sobre
+        </button>
+        <button
+            onClick={() => handleGo(router,"","menu")}
             className="px-6 py-3 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
         >
-            Voltar ao Início
+            Voltar ao Menu
         </button>
       </div>
     </div>
