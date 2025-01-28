@@ -9,7 +9,6 @@ export default function Ranking() {
   const router = useRouter();
 
   useEffect(() => {
-    // Recuperar os rankings do localStorage
     const savedRankings = JSON.parse(localStorage.getItem("rankings")) || [];
     setRankings(savedRankings);
   }, []);
@@ -31,27 +30,25 @@ export default function Ranking() {
         </h1>
         <div className="overflow-auto">
           {rankings.length === 0 ? (
-            <p className="text-xl text-center">Nenhum ranking registrado ainda.</p>
+            <p className="text-xl text-center text-gold">Nenhum ranking registrado ainda.</p>
           ) : (
-            <table className="table-auto w-full text-center border-collapse bg-white text-black rounded-lg shadow-lg">
+            <table className="table-auto w-full text-center border-collapse text-gold bg-dark rounded-lg shadow-lg">
               <thead>
-                <tr className="bg-gray-300 text-lg font-semibold">
-                  <th className="px-4 py-2 border border-gray-400">Nome</th>
-                  <th className="px-4 py-2 border border-gray-400">Vitórias</th>
+                <tr className="bg-gold text-dark text-lg font-semibold">
+                  <th className="px-4 py-2 border border-gold">Nome</th>
+                  <th className="px-4 py-2 border border-gold">Vitórias</th>
                 </tr>
               </thead>
               <tbody>
                 {rankings.map((player, index) => (
                   <tr
                     key={index}
-                    className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}
+                    className={
+                      index % 2 === 0 ? "bg-opacity-90" : "bg-dark bg-opacity-75"
+                    }
                   >
-                    <td className="px-4 py-2 border border-gray-400">
-                      {player.name}
-                    </td>
-                    <td className="px-4 py-2 border border-gray-400">
-                      {player.score}
-                    </td>
+                    <td className="px-4 py-2 border border-gold">{player.name}</td>
+                    <td className="px-4 py-2 border border-gold">{player.score}</td>
                   </tr>
                 ))}
               </tbody>
