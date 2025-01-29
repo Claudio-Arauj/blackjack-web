@@ -107,7 +107,7 @@ export default function Home() {
             <div className="flex justify-center gap-4 mt-3">
               <button
                 onClick={draw}
-                className="px-4 py-2 bg-gold text-dark rounded hover:bg-dark hover:text-gold transition"
+                className="mt-3 px-4 py-2 bg-gold text-dark rounded hover:bg-dark hover:text-gold transition"
               >
                 Continuar
               </button>
