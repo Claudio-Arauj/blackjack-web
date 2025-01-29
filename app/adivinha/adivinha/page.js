@@ -1,30 +1,39 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { handleGo } from "@/app/componentes/components";
+import { useNavigation } from "@/app/componentes/clientComponents";
+import { getCardBackImage, starterDeck, drawCards } from "@/app/componentes/serverComponents";
 
 export default function Home() {
   const [deckId, setDeckId] = useState(null);
   const [playerCard, setPlayerCard] = useState(null);
   const [playerScore, setPlayerScore] = useState(0);
   const [roundResult, setRoundResult] = useState("");
-  const [cardBackImage, setCardBackImage] = useState("https://deckofcardsapi.com/static/img/back.png"); // Verso da carta
+  const [cardBackImage, setCardBackImage] = useState(null); // Verso da carta
   const [guessType, setGuessType] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [hasGuessed, setHasGuessed] = useState(false);
 
-  const router = useRouter();
+  const navigation = useNavigation()
+
+  // Função para pegar o verso da carta
+  const fetchCardBackImage = async () => {
+    try {
+      const imageUrl = await getCardBackImage(); // Chama a server action
+      setCardBackImage(imageUrl); // Atualiza o estado com o URL do verso
+    } catch (error) {
+      console.error("Erro ao pegar o verso da carta:", error);
+    }
+  };
 
   const initializeGame = async () => {
     try {
-      const response = await axios.get("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
-      setDeckId(response.data.deck_id);
+      const response = await starterDeck();
+      setDeckId(response.deck_id);
       setPlayerCard(null);
       setPlayerScore(0);
       setRoundResult("");
-      setCardBackImage("https://deckofcardsapi.com/static/img/back.png");
+      fetchCardBackImage()
       setGuessType("");
       setIsFormVisible(false);
       setHasGuessed(false);
@@ -33,12 +42,12 @@ export default function Home() {
     }
   };
 
-  const drawCard = async () => {
+  const draw = async () => {
     try {
-      const response = await axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`);
-      const drawnCard = response.data.cards[0];
+      const response = await drawCards(deckId, 1);
+      const drawnCard = response[0];
       setPlayerCard(drawnCard);
-      setCardBackImage("https://deckofcardsapi.com/static/img/back.png");
+      fetchCardBackImage()
       setIsFormVisible(true);
       setHasGuessed(false);
     } catch (error) {
@@ -87,7 +96,7 @@ export default function Home() {
           <p className="text-xl">{roundResult}</p>
           {!isFormVisible && !hasGuessed && (
             <button
-              onClick={drawCard}
+              onClick={draw}
               className="mt-3 px-4 py-2 bg-gold text-dark rounded hover:bg-dark hover:text-gold transition"
             >
               {playerCard ? "Continuar" : "Começar"}
@@ -97,13 +106,13 @@ export default function Home() {
           {hasGuessed && (
             <div className="flex justify-center gap-4 mt-3">
               <button
-                onClick={drawCard}
+                onClick={draw}
                 className="px-4 py-2 bg-gold text-dark rounded hover:bg-dark hover:text-gold transition"
               >
                 Continuar
               </button>
               <button
-                onClick={() => handleGo(router,"","adivinha")}
+                onClick={() => navigation("","adivinha")}
                 className="mt-3 px-4 py-2 bg-gray-500 text-white rounded hover:bg-dark hover:text-gold transition"
               >
                 Voltar ao Menu

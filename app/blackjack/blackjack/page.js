@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation"; // Importa o useRouter para navegação
-import { handleGo } from "@/app/componentes/components";
+import { useNavigation } from "@/app/componentes/clientComponents";
+import { starterDeck, drawCards } from "@/app/componentes/serverComponents";
 
 export default function Home() {
   const [deckId, setDeckId] = useState(null);
@@ -21,12 +20,12 @@ export default function Home() {
   const [showSaveModal, setShowSaveModal] = useState(false); 
   const [playerName, setPlayerName] = useState(""); // Nome do jogador
   const [existingPlayerIndex, setExistingPlayerIndex] = useState(null); // Índice do jogador existente
-  const router = useRouter(); 
+  const navigation = useNavigation() 
 
   const initializeGame = async () => {
     try {
-      const response = await axios.get("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
-      setDeckId(response.data.deck_id);
+      const response = await starterDeck()
+      setDeckId(response.deck_id);
       setPlayerCards([]);
       setDealerCards([]);
       setPlayerScore(0);
@@ -38,16 +37,6 @@ export default function Home() {
       setDealerOver21(false);
     } catch (error) {
       console.error("Erro ao criar baralho:", error);
-    }
-  };
-
-  const drawCards = async (count) => {
-    try {
-      const response = await axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=${count}`);
-      return response.data.cards;
-    } catch (error) {
-      console.error("Erro ao puxar cartas:", error);
-      return [];
     }
   };
 
@@ -75,7 +64,7 @@ export default function Home() {
   };
 
   const handlePlayerTurn = async () => {
-    const newCards = await drawCards(1);
+    const newCards = await drawCards(deckId, 1);
     const updatedPlayerCards = [...playerCards, ...newCards];
     const newScore = calculateScore(updatedPlayerCards);
 
@@ -94,7 +83,7 @@ export default function Home() {
     let newScore = dealerScore;
 
     while (newScore < 17) {
-      const newCards = await drawCards(1);
+      const newCards = await drawCards(deckId, 1);
       updatedDealerCards = [...updatedDealerCards, ...newCards];
       newScore = calculateScore(updatedDealerCards);
       setDealerCards(updatedDealerCards);
@@ -145,7 +134,7 @@ export default function Home() {
         rankings.push({ name: playerName, score: playerWins });
         rankings.sort((a, b) => b.score - a.score);
         localStorage.setItem("rankings", JSON.stringify(rankings));
-        router.push("/blackjack_menu");
+        navigation("","blackjack");
       }
     } else {
       alert("Por favor, insira um nome para salvar a pontuação.");
@@ -161,7 +150,7 @@ export default function Home() {
 
     rankings.sort((a, b) => b.score - a.score);
     localStorage.setItem("rankings", JSON.stringify(rankings));
-    handleGo(router,"","blackjack")
+    navigation("","blackjack")
     setShowSaveModal(false);
   };
 
@@ -260,7 +249,7 @@ export default function Home() {
               <button
                 onClick={() => {
                   setShowSaveModal(false);
-                  handleGo(router,"","blackjack");
+                  navigation("","blackjack");
                 }}
                 className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600"
               >
@@ -281,7 +270,7 @@ export default function Home() {
                   <button
                     onClick={() => {
                       handleOverwriteScore(false),
-                      handleGo(router,"","blackjack");
+                      navigation("","blackjack");
                     }}
                     className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700"
                   >

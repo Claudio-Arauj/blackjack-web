@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";  // Importando useRouter
-import { handleGo } from "@/app/componentes/components";
+import { useNavigation } from "@/app/componentes/clientComponents";
+import { starterDeck, drawCards } from "@/app/componentes/serverComponents";
 
 export default function Home() {
   const [deckId, setDeckId] = useState(null);
@@ -14,13 +14,13 @@ export default function Home() {
   const [gameOver, setGameOver] = useState(false);
   const [roundResult, setRoundResult] = useState("");
   
-  const router = useRouter();  // Inicializando useRouter
+  const navigation = useNavigation()
 
   const initializeGame = async () => {
     try {
       // Criar um novo baralho
-      const response = await axios.get("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
-      setDeckId(response.data.deck_id);
+      const response = await starterDeck();
+      setDeckId(response.deck_id);
       setPlayerCard(null);
       setComputerCard(null);
       setPlayerScore(0);
@@ -32,10 +32,10 @@ export default function Home() {
     }
   };
 
-  const drawCard = async () => {
+  const draw = async () => {
     try {
-      const response = await axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`);
-      const drawnCards = response.data.cards;
+      const response = await drawCards(deckId, 2);
+      const drawnCards = response;
       const playerCard = drawnCards[0];
       const computerCard = drawnCards[1];
 
@@ -91,7 +91,7 @@ export default function Home() {
               Jogar Novamente
             </button>
             <button
-              onClick={() => handleGo(router,"","war")}
+              onClick={() => navigation("","war")}
               className="mt-3 px-4 py-2 bg-gray-500 text-white rounded hover:bg-dark hover:text-gold transition"
             >
               Voltar ao Menu
@@ -119,7 +119,7 @@ export default function Home() {
           <div className="my-5">
             <p className="text-xl">{roundResult}</p>
             <button
-              onClick={drawCard}
+              onClick={draw}
               className="mt-3 px-4 py-2 bg-gold text-dark rounded hover:bg-dark hover:text-gold transition"
             >
               Comprar Carta

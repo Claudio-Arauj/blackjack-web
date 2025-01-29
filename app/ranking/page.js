@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { handleGo } from "@/app/componentes/components";
+import { useNavigation } from "../componentes/clientComponents";
 
 export default function Ranking() {
   const [rankings, setRankings] = useState([]);
-  const router = useRouter();
+  const navigation = useNavigation();
 
   useEffect(() => {
     const savedRankings = JSON.parse(localStorage.getItem("rankings")) || [];
@@ -56,7 +55,7 @@ export default function Ranking() {
           )}
         </div>
         <button
-          onClick={() => handleGo(router, "", "blackjack")}
+          onClick={() => navigation("", "blackjack")}
           className="px-6 py-3 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition mt-5 w-full"
         >
           Voltar ao Menu

@@ -1,10 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { handleGo } from "../componentes/components";
+import { useNavigation } from "../componentes/clientComponents";
 
 export default function Menu() {
-  const router = useRouter();
+  const navigation = useNavigation()
 
   return (
     <div
@@ -24,25 +23,25 @@ export default function Menu() {
 
         <div className="flex flex-col gap-5">
           <button
-            onClick={() => handleGo(router, "war", "war")}
+            onClick={() => navigation("war", "war")}
             className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
           >
             Jogar War
           </button>
           <button
-            onClick={() => handleGo(router, "como-jogar", "war")}
+            onClick={() => navigation("como-jogar", "war")}
             className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
           >
             Como Jogar
           </button>
           <button
-            onClick={() => handleGo(router, "sobre", "war")}
+            onClick={() => navigation("sobre", "war")}
             className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
           >
             Sobre
           </button>
           <button
-            onClick={() => handleGo(router, "", "menu")}
+            onClick={() => navigation("", "menu")}
             className="px-6 py-3 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
           >
             Voltar ao Menu

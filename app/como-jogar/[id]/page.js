@@ -1,14 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { handleGo, pageData } from "@/app/componentes/components";
+import { useNavigation } from "@/app/componentes/clientComponents";
+import { pageData } from "@/app/componentes/pageData";
 import React from "react";
 
 export default function ComoJogar({ params }) {
   // React.use() para lidar com a Promise de params
   const { id } = React.use(params);
   // Caminho de volta
-  const router = useRouter();
+  const navigation = useNavigation();
 
   // Obtendo os dados correspondentes ao id da URL
   const tutorial = pageData.tutorial[id];
@@ -32,7 +32,7 @@ export default function ComoJogar({ params }) {
           {tutorial.descricao}
         </p>
         <button
-          onClick={() => handleGo(router, "", `${id}`)}
+          onClick={() => navigation("", `${id}`)}
           className="px-6 py-3 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
         >
           Voltar ao Menu

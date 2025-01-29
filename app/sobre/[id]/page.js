@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { pageData } from "@/app/componentes/components";
+import { pageData } from "@/app/componentes/pageData";
 import React from "react";
 
 export default function Sobre({ params }) {

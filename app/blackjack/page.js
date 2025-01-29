@@ -1,10 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { handleGo } from "../componentes/components";
+import { useNavigation } from "../componentes/clientComponents";
 
 export default function Menu() {
-  const router = useRouter();
+  const navigation = useNavigation()
 
   return (
     <div
@@ -24,31 +23,31 @@ export default function Menu() {
 
         <div className="flex flex-col gap-5">
           <button
-            onClick={() => handleGo(router, "blackjack", "blackjack")}
+            onClick={() => navigation("blackjack", "blackjack")}
             className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
           >
             Jogar Blackjack
           </button>
           <button
-            onClick={() => handleGo(router, "", "ranking")}
+            onClick={() => navigation("", "ranking")}
             className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
           >
             Ranking
           </button>
           <button
-            onClick={() => handleGo(router, "como-jogar", "blackjack")}
+            onClick={() => navigation("como-jogar", "blackjack")}
             className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
           >
             Como Jogar
           </button>
           <button
-            onClick={() => handleGo(router, "sobre", "blackjack")}
+            onClick={() => navigation("sobre", "blackjack")}
             className="px-8 py-4 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
           >
             Sobre
           </button>
           <button
-            onClick={() => handleGo(router, "", "menu")}
+            onClick={() => navigation("", "menu")}
             className="px-6 py-3 bg-gold text-dark text-2xl rounded hover:bg-dark hover:text-gold transition"
           >
             Voltar ao Menu
